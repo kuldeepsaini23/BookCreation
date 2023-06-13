@@ -1,16 +1,16 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-
+import { Link } from "react-router-dom";
+import { FaBackward } from "react-icons/fa";
 
 const UpdateBook = () => {
-  const {id} = useParams();
+  const { id } = useParams();
 
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
 
   const createBook = async (data) => {
-
     const savedUserResponse = await fetch(
       `${process.env.REACT_APP_BASE_URL}/updateBook/${id}`,
       {
@@ -24,15 +24,26 @@ const UpdateBook = () => {
 
     console.log("FORM RESPONSE......", savedUserResponse);
 
-    navigate("/")
+    navigate("/");
   };
 
   return (
     <div className="flex justify-center items-center w-full h-screen flex-col gap-6">
       <h1 className="text-bold text-5xl text-white">Update Your Book</h1>
+      <div className="w-5/12 flex items-center">
+        <p className="text-base text-gray-600 dark:text-gray-300 self-start">
+          <Link
+            to={"/"}
+            className="font-medium text-indigo-600 transition-all duration-200 hover:text-indigo-700 hover:underline focus:text-indigo-700 flex items-center gap-3"
+          >
+            <FaBackward />
+            Back to all Book List
+          </Link>
+        </p>
+      </div>
+
       <form onSubmit={handleSubmit(createBook)} className="mt-8 w-5/12">
         <div className="space-y-5">
-
           <div>
             <label
               htmlFor="title"
@@ -131,6 +142,6 @@ const UpdateBook = () => {
       </form>
     </div>
   );
-}
+};
 
-export default UpdateBook
+export default UpdateBook;
