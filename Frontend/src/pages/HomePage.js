@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BsPencil } from "react-icons/bs";
 import { AiOutlineDelete } from "react-icons/ai";
-import swal from "sweetalert2";
+
 
 const HomePage = () => {
   const [bookData, setBookData] = useState();
