@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FaBackward } from "react-icons/fa";
+import {toast} from "react-hot-toast"
 
 const UpdateBook = () => {
   const { id } = useParams();
@@ -25,6 +26,7 @@ const UpdateBook = () => {
     console.log("FORM RESPONSE......", savedUserResponse);
 
     navigate("/");
+    toast.success("Book Added")
   };
 
   return (
