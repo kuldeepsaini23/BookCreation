@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BsPencil } from "react-icons/bs";
 import { AiOutlineDelete } from "react-icons/ai";
+import { toast } from "react-hot-toast";
 
 
 const HomePage = () => {
@@ -23,6 +24,7 @@ const HomePage = () => {
       setBookData(res);
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong")
     }
   };
 
@@ -33,6 +35,7 @@ const HomePage = () => {
 
   async function handleDelete(book_id) {
     try {
+      const toastId = toast.loading("Loading...")
       const deleteBook = await fetch(
         `${process.env.REACT_APP_BASE_URL}/deleteBook/${book_id}`,
         {
@@ -42,7 +45,9 @@ const HomePage = () => {
 
       const res = await deleteBook.json();
       console.log(res.message);
+      toast.dismiss(toastId)
       getAllData();
+      toast.success("Book Deleted")
     } catch (error) {
       console.log(error);
     }

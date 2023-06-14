@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 
 const BookForm = () => {
@@ -8,21 +9,31 @@ const BookForm = () => {
   const navigate = useNavigate();
 
   const createBook = async (data) => {
-
-    const savedUserResponse = await fetch(
-      `${process.env.REACT_APP_BASE_URL}/createBook`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...data }),
-      }
-    );
-
-    console.log("FORM RESPONSE......", savedUserResponse);
-
-    navigate("/")
+    
+    const toastId = toast.loading("Loading...")
+    try{
+      const savedUserResponse = await fetch(
+        `${process.env.REACT_APP_BASE_URL}/createBook`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...data }),
+        }
+      );
+  
+      console.log("FORM RESPONSE......", savedUserResponse);
+      toast.dismiss(toastId)
+  
+      navigate("/")
+      toast.success("Book Updated")
+  
+    }catch(error){
+      console.log(error.message)
+      toast.error("Something went wrong")
+    }
+   
   };
 
   return (

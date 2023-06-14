@@ -12,21 +12,29 @@ const UpdateBook = () => {
   const navigate = useNavigate();
 
   const createBook = async (data) => {
-    const savedUserResponse = await fetch(
-      `${process.env.REACT_APP_BASE_URL}/updateBook/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...data }),
-      }
-    );
+    const toastId = toast.loading("Loading...")
 
-    console.log("FORM RESPONSE......", savedUserResponse);
-
-    navigate("/");
-    toast.success("Book Added")
+    try{
+      const savedUserResponse = await fetch(
+        `${process.env.REACT_APP_BASE_URL}/updateBook/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...data }),
+        }
+      );
+  
+      console.log("FORM RESPONSE......", savedUserResponse);
+      toast.dismiss(toastId)
+      navigate("/");
+      toast.success("Book Updated")
+    }catch (error) {
+      console.log(error);
+      toast.error("Something went wrong")
+    }
+   
   };
 
   return (
